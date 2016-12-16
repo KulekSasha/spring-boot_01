@@ -1,0 +1,10 @@
+
+/.idea/
+/.svn/
+/logs/
+/out/
+/target/
+*.iml
+/lib
+/src/main/java/com/nix/api/soap/other/
+
