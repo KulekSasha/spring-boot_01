@@ -1,6 +1,8 @@
 package com.nix;
 
-import com.nix.repository.UserRepository;
+
+import com.nix.model.User;
+import com.nix.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -25,12 +27,19 @@ public class Test_1 {
     }
 
     @Bean
-    public CommandLineRunner demo(UserRepository userDao) {
+    public CommandLineRunner demo(UserService userService) {
         return (args) -> {
-            log.info("find by login: {}", userDao.findByLoginIgnoreCase("tEstUser_1"));
-            log.info("find all: {}", userDao.findAll());
-            log.info("find by email: {}", userDao.findByEmail("tEstUser_2@gmail.com"));
-            log.info("count: {}", userDao.count());
+
+
+            User testUser_1 = userService.findByLogin("testUser_1");
+
+            testUser_1.setFirstName("updated");
+            testUser_1.setLogin("updated");
+            testUser_1.setId(0L);
+
+            userService.update(testUser_1);
+
         };
     }
+
 }

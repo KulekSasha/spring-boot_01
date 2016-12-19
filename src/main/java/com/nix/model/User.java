@@ -22,6 +22,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "PERSON", schema = "PUBLIC")
+@NamedEntityGraph(name = "user.role",
+        attributeNodes = @NamedAttributeNode("role"))
 public class User {
 
     @Id
@@ -57,7 +59,7 @@ public class User {
     @NotNull(message = "{user.birthday.past}")
     private Date birthday;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "ROLE_ID")
     @NotNull(message = "{user.role.not.found}")
     private Role role;
