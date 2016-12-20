@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service("userService")
-@Transactional
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -27,12 +27,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User create(User user) {
         log.trace("Invoke create with param: {}", user);
         return userRepository.saveAndFlush(user);
     }
 
     @Override
+    @Transactional
     public User update(User user) {
         log.trace("Invoke update with param: {}", user);
         if (userRepository.findOne(user.getId()) != null) {
@@ -42,6 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void delete(User user) {
         log.trace("Invoke remove with param: {}", user);
         userRepository.delete(user);

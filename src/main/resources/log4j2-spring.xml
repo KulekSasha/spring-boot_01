@@ -38,7 +38,7 @@
         </Logger>
 
         <Logger name="com.zaxxer.hikari"
-                level="debug" additivity="false">
+                level="error" additivity="false">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="RollingFile"/>
         </Logger>
@@ -62,6 +62,16 @@
         </Logger>
 
         <Logger name="org.springframework" additivity="false"
+                level="debug">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+        <Logger name="org.springframework.orm" additivity="false"
+                level="debug">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+        <Logger name="org.springframework.jndi" additivity="false"
                 level="error">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="RollingFile"/>
