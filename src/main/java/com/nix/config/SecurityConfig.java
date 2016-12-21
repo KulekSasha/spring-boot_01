@@ -93,14 +93,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Order(2)
     public class FormLoginWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
-
         @Override
         protected void configure(HttpSecurity http) throws Exception {
 //      @formatter:off
             http
                     .authorizeRequests()
                     .antMatchers("/resources/**", "/", "/login", "/logout",
-                            "/registration/**").permitAll()
+                            "/registration/**", "/api/**").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .antMatchers("/user/**").access("hasRole('ADMIN') or hasRole('USER')")
                     .anyRequest().authenticated()

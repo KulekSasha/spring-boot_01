@@ -1,5 +1,9 @@
 package com.nix.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.nix.api.rest.json.JsonDate;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -57,6 +61,8 @@ public class User {
     @Temporal(TemporalType.DATE)
     @Past(message = "{user.birthday.past}")
     @NotNull(message = "{user.birthday.past}")
+    @JsonDeserialize(using = JsonDate.Deserializer.class)
+    @JsonSerialize(using = JsonDate.Serializer.class)
     private Date birthday;
 
     @ManyToOne

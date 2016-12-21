@@ -8,7 +8,7 @@ $.ajaxSetup({
 
 //setup deployment context
 $.ajaxPrefilter(function (options) {
-    let deploymentContext = '/lab-22-backbone';
+    let deploymentContext = '/sboot';
     options.url = deploymentContext + options.url;
 });
 
