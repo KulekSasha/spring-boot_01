@@ -71,6 +71,12 @@
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="RollingFile"/>
         </Logger>
+        <Logger name="org.springframework.transaction" additivity="false"
+                level="debug">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+
         <Logger name="org.springframework.jndi" additivity="false"
                 level="error">
             <AppenderRef ref="STDOUT"/>

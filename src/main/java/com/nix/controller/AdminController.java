@@ -1,6 +1,5 @@
 package com.nix.controller;
 
-import com.nix.model.User;
 import com.nix.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,4 +39,7 @@ public class AdminController {
         modelAndView.setViewName("admin/admin");
         return modelAndView;
     }
+
+
+
 }

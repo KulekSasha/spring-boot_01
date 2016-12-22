@@ -7,13 +7,12 @@
 <html>
 <head>
     <c:set var="url">${pageContext.request.contextPath}</c:set>
-    <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapCss"/>
-    <spring:url value="/resources/js/jquery-3.1.1.js" var="jquery"/>
-    <spring:url value="/resources/js/bootstrap.min.js" var="bootstrapJs"/>
 
     <title>Login</title>
 
-    <link href="${bootstrapCss}" rel="stylesheet"/>
+    <link rel='stylesheet' href='${url}/webjars/bootstrap/css/bootstrap.min.css'>
+    <link rel="icon" type="image/x-icon"
+          href="${url}/resources/img/favicon.ico">
 
     <style>
         body {
@@ -61,11 +60,11 @@
     </div>
 </div>
 
-<!-- jQuery Version 1.11.1 -->
-<script src="${jquery}"></script>
+<!-- jQuery Version -->
+<script src="${url}/webjars/jquery/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="${bootstrapJs}"></script>
+<script src="${url}/webjars/bootstrap/js/bootstrap.min.js"></script>
 
 <script>
     $("#login-form").submit(function (event) {

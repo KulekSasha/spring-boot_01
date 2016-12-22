@@ -7,16 +7,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<%@ page import="net.tanesha.recaptcha.ReCaptcha" %>
-<%@ page import="net.tanesha.recaptcha.ReCaptchaFactory" %>
-<%@ page import="java.util.Properties" %>
-
 <!DOCTYPE html>
 <html>
 <head>
     <c:set var="url">${pageContext.request.contextPath}</c:set>
     <title>Admin add</title>
-    <link href="${url}/resources/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="${url}/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="${url}/resources/img/favicon.ico">
+
     <style>
         body {
             padding-top: 70px;
@@ -27,10 +26,13 @@
 
 <!-- Page Content -->
 <div class="container">
-
+    <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+            <h3>New user registration</h3> </br>
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-8 col-lg-offset-2 text-left">
-            <h3>New user registration</h3> </br>
 
             <form:form method="post" modelAttribute="newUser" class="form-horizontal"
                        action="${url}/registration/new">
@@ -83,7 +85,8 @@
                         <label class="control-label col-sm-3" for="firstName">First
                             name:</label>
                         <div class="col-sm-4">
-                            <form:input path="firstName" class="form-control" placeholder="Name..."/>
+                            <form:input path="firstName" class="form-control"
+                                        placeholder="Name..."/>
                             <form:errors path="firstName" class="control-label"/>
                         </div>
                     </div>
@@ -93,7 +96,8 @@
                     <div class="form-group ${status.error ? 'has-error' : ''}">
                         <label class="control-label col-sm-3" for="lastName">Last name:</label>
                         <div class="col-sm-4">
-                            <form:input path="lastName" class="form-control" placeholder="Surname..."/>
+                            <form:input path="lastName" class="form-control"
+                                        placeholder="Surname..."/>
                             <form:errors path="lastName" class="control-label"/>
                         </div>
                     </div>
@@ -124,34 +128,15 @@
 
                 <%--reCaptcha--%>
                 <div class="form-group ${invalidRecaptcha ? 'has-error' : ''}">
-                    <div class="col-lg-offset-2">
-                        <c:set var="publicKey">
+                    <div class="g-recaptcha col-sm-offset-2"
+                         data-sitekey=
                             <spring:eval
-                                    expression="@environment.getProperty('recaptcha.site-key')"/>
-                        </c:set>
-                        <c:set var="secretKey"><spring:eval
-                                expression="@environment.getProperty('recaptcha.secret-key')"/>
-                        </c:set>
+                                    expression="@environment.getProperty('recaptcha.validation.site-key')"/>>
 
-                        <%
-                            ReCaptcha c = ReCaptchaFactory.newReCaptcha(
-                                    (String) pageContext.getAttribute("publicKey"),
-                                    (String) pageContext.getAttribute("secretKey"),
-                                    false);
-                            out.print(c.createRecaptchaHtml(null, new Properties() {
-                                        {
-                                            setProperty("theme", "white");
-                                        }
-                                    }
-                            ));
-                        %>
-
-                        <c:if test="${invalidRecaptcha == true}">
-                        <span id="captcha.errors"
-                              class="control-label has-error">Invalid code</span>
-                        </c:if>
                     </div>
                 </div>
+                <%--</div>--%>
+
                 <%--reCaptcha end--%>
 
                 <div class=" form-group">
@@ -168,11 +153,13 @@
     </div>
 </div>
 
-<!-- jQuery Version 1.11.1 -->
-<script src="${url}/resources/js/jquery-3.1.1.js"></script>
+<!-- jQuery Version -->
+<script src="${url}/webjars/jquery/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="${url}/resources/js/bootstrap.min.js"></script>
+<script src="${url}/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </body>
 </html>

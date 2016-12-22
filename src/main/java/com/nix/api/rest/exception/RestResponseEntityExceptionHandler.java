@@ -1,6 +1,6 @@
-package com.nix.api.rest;
+package com.nix.api.rest.exception;
 
-import com.nix.api.rest.exception.NotValidUserException;
+import com.nix.api.rest.controller.UserRestController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -9,13 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice
+@ControllerAdvice(basePackageClasses = UserRestController.class)
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @Autowired
@@ -33,6 +32,14 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
         return handleExceptionInternal(e, errors,
                 new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
+    }
+
+    @ExceptionHandler(value = {UserNotFoundException.class})
+    protected ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException e,
+                                                                 WebRequest request) {
+
+        return handleExceptionInternal(e, null, new HttpHeaders(),
+                HttpStatus.NOT_FOUND, request);
     }
 
 }

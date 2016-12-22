@@ -7,9 +7,10 @@
 <head>
     <c:set var="url">${pageContext.request.contextPath}</c:set>
     <title>Admin</title>
-    <link href="${url}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${url}/resources/css/jquery-ui.min.css" rel="stylesheet">
-    <link href="${url}/resources/css/jquery-ui.structure.min.css" rel="stylesheet">
+    <link href="${url}/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${url}/webjars/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+    <link href="${url}/webjars/jquery-ui/jquery-ui.structure.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="${url}/resources/img/favicon.ico">
     <style>
         body {
             padding-top: 70px;
@@ -33,9 +34,9 @@
 
 
 <%--jQuery  & Bootstrap--%>
-<script src="${url}/resources/js/jquery-3.1.1.js"></script>
-<script src="${url}/resources/js/bootstrap.min.js"></script>
-<script src="${url}/resources/js/jquery-ui.min.js"></script>
+<script src="${url}/webjars/jquery/jquery.min.js"></script>
+<script src="${url}/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script src="${url}/webjars/jquery-ui/jquery-ui.min.js"></script>
 
 <%--App Libs--%>
 <script src="${url}/resources/js/app/lib/underscore.js"></script>

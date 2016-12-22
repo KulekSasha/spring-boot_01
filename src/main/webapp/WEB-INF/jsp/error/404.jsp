@@ -28,7 +28,7 @@
     <div class="row">
         <div class="col-lg-4 col-lg-offset-4 text-left">
             <div class="alert alert-danger">
-                Access denied.
+                404 error.
             </div>
         </div>
     </div>

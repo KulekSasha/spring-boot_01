@@ -1,13 +1,13 @@
-package com.nix.api.rest;
+package com.nix.api.rest.controller;
 
 import com.nix.api.rest.exception.NotValidUserException;
+import com.nix.api.rest.exception.UserNotFoundException;
 import com.nix.model.User;
 import com.nix.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -34,17 +34,24 @@ public class UserRestController {
 
     @RequestMapping(method = RequestMethod.GET)
     public List<User> getUsers() {
+        log.debug("invoke getUsers");
         return userService.findAll();
     }
 
     @RequestMapping(value = "/{login}", method = RequestMethod.GET)
-    public ResponseEntity<User> getUserByLogin(@PathVariable String login) {
+    public User getUserByLogin(@PathVariable String login) {
+
+        log.debug("invoke getUserByLogin, incoming login: {}", login);
+
         User user = userService.findByLogin(login);
 
-        return user != null
-                ? ResponseEntity.ok(user)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (user == null) {
+            log.error("user not found, login: {}", login);
+            throw new UserNotFoundException("user login: " + login);
+        }
 
+        log.debug("return found user: {}", user);
+        return user;
     }
 
     @RequestMapping(value = "/{login}", method = RequestMethod.PUT)
@@ -52,10 +59,11 @@ public class UserRestController {
                                      BindingResult result,
                                      @PathVariable String login) {
 
-        log.debug("update user, incoming user: {}", user);
+        log.debug("invoke updateUser, incoming user: {}", user);
 
         if (userService.findByLogin(login) == null) {
-            return ResponseEntity.notFound().build();
+            log.error("user for update not found, login: {}", login);
+            throw new UserNotFoundException("user login: " + login);
         }
 
         if (!login.equalsIgnoreCase(user.getLogin())) {
@@ -63,18 +71,19 @@ public class UserRestController {
         }
 
         if (result.hasErrors()) {
+            log.debug("user for update not valid, errors: {}", result.getFieldErrors());
             throw new NotValidUserException("updated user not valid", result);
         }
 
-        userService.update(user);
+        User updatedUser = userService.update(user);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{login}")
-                .buildAndExpand(user.getLogin()).toUri();
+                .buildAndExpand(updatedUser.getLogin()).toUri();
 
         return ResponseEntity.ok()
                 .location(location)
-                .build();
+                .body(updatedUser);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -100,6 +109,22 @@ public class UserRestController {
         return ResponseEntity
                 .created(location)
                 .body(createdUser);
+    }
+
+    @RequestMapping(value = "/{login}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteUser(@PathVariable String login) {
+        log.debug("invoke deleteUser with login: {}", login);
+
+        User userToDelete = userService.findByLogin(login);
+
+        if (userToDelete == null) {
+            log.error("user for deleting not found, login: {}", login);
+            throw new UserNotFoundException("User not found");
+        }
+
+        userService.delete(userToDelete);
+        log.debug("user deleted, login: {}", login);
+        return ResponseEntity.noContent().build();
     }
 
 }
