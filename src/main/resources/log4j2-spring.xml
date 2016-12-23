@@ -56,13 +56,13 @@
         </Logger>
 
         <Logger name="org.springframework.security" additivity="false"
-                level="error">
+                level="debug">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="RollingFile"/>
         </Logger>
 
         <Logger name="org.springframework" additivity="false"
-                level="debug">
+                level="error">
             <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="RollingFile"/>
         </Logger>

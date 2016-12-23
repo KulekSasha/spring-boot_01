@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public ModelAndView user(ModelAndView modelAndView, Principal principal) {
+    public ModelAndView showUserPage(ModelAndView modelAndView, Principal principal) {
         log.debug("invoke user");
         User user = null;
         if (principal != null) {

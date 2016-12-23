@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -28,7 +29,7 @@ import java.io.PrintWriter;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
@@ -125,7 +126,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/resources/**", "/webjars/**", "/", "/login", "/logout",
                             "/registration/**", "/api/**").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
-                    .antMatchers("/user/**").access("hasRole('ADMIN') or hasRole('USER')")
+                    .antMatchers("/user/**").access("hasAnyRole('ADMIN', 'USER')")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
