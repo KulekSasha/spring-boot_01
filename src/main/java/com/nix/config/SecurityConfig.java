@@ -92,7 +92,6 @@ public class SecurityConfig {
              http
                     .antMatcher("/api/**")
                     .authorizeRequests()
-                    .regexMatchers("/api/soap/users\\?wsdl").permitAll()
                     .antMatchers("/api/**").hasRole("ADMIN")
                     .and()
                  .httpBasic()

@@ -61,7 +61,7 @@ public class UserRestController {
 
         log.debug("invoke updateUser, incoming user: {}", user);
 
-        if (userService.findByLogin(login) == null) {
+        if (userService.findByLogin(user.getLogin()) == null) {
             log.error("user for update not found, login: {}", login);
             throw new UserNotFoundException("user login: " + login);
         }
@@ -90,7 +90,7 @@ public class UserRestController {
     public ResponseEntity createUser(@Valid @RequestBody User user,
                                      BindingResult result) {
 
-        log.debug("update user, incoming user: {}", user);
+        log.debug("create user, incoming user: {}", user);
 
         if (userService.findByLogin(user.getLogin()) != null) {
             result.rejectValue("login", "non.unique.login", "login exist");
